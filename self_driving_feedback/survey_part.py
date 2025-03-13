@@ -3,22 +3,35 @@ from my_components import checkbox_scale
 
 
 def show_survey():
-    st.title("자율 주행 시스템 만족도 조사")
+    with st.container():
+        st.markdown("<h2 style='text-align: center;'>자율 주행 시스템 만족도 조사</h2>", unsafe_allow_html=True)
+        
+        # 응답자 정보 제목
+        st.subheader("응답자 정보", anchor="A")
+        
+        # 아이디 입력
+        user_id = st.text_input("ID를 입력해 주세요.", key="user_id", placeholder="예: 사용자123", label_visibility="collapsed")
+        
+        # 나이 선택
+        age = st.selectbox(
+            "나이를 골라주세요.", 
+            ["10대", "20대", "30대", "40대 이상"], 
+            key="age"
+        )
 
-    # (A) 응답자 정보
-    st.subheader("응답자 정보")
-    user_id = st.text_input("ID를 입력해 주세요.", key="user_id")
-    gender = st.radio("성별을 골라주세요.", ["남성", "여성"], key="gender")
-    age = st.selectbox(
-        "나이를 골라주세요.", ["10대", "20대", "30대", "40대 이상"], key="age"
-    )
-    region = st.selectbox(
-        "거주 지역을 선택하세요.",
-        ["서울", "경기/인천", "충청/대전", "전라/광주", "경상/부산", "강원/제주"],
-        key="region",
-    )
+        # 성별 선택
+        gender = st.radio("성별을 선택하세요.", ["남성", "여성"], key="gender")
 
-    st.write("---")
+        # 거주 지역 선택
+        region = st.selectbox(
+            "거주 지역을 선택하세요.",
+            ["서울", "경기/인천", "충청/대전", "전라/광주", "경상/부산", "강원/제주"],
+            key="region",
+        )
+
+        # 컨테이너에 스타일 추가 (너비 조정)
+       
+    st.divider()
 
     # (B) 주행 중 느낀 점 (승차감 중심) - 예시 2문항
     st.subheader("주행 중 느낀점 (승차감 중심)")
