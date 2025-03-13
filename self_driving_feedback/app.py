@@ -3,14 +3,14 @@ from survey_part import show_survey
 from result_part import show_result
 
 def main():
-    st.set_page_config(page_title="자율주행 설문/결과", layout="wide")
+    st.set_page_config(page_title="자율주행 설문/결과", layout="centered")
 
     # ✅ 탭 메뉴 생성
     tabs = st.tabs(["설문 부분", "결과 부분"])
 
     with tabs[0]:
         # 미리보기, 내보내기 버튼 (위치 조정 가능)
-        col1, col2, col3 = st.columns([8, 1, 1])
+        col1, col2, col3 = st.columns([5, 1, 1])
         
         with col2:
             st.button("미리보기", key="preview_survey")
@@ -22,7 +22,7 @@ def main():
         show_survey()
 
     with tabs[1]:
-        col1, col2, col3 = st.columns([8, 1, 1])
+        col1, col2, col3 = st.columns([5, 1, 1])
         
         with col2:
             st.button("미리보기", key="preview_result")
