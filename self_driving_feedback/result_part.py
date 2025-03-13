@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 def show_result():
-    st.title("자율 주행 시스템 만족도 분석 결과")
+    st.markdown("<h2 style='text-align:center;'> 자율 주행 시스템 만족도 분석 결과 </h2>", unsafe_allow_html=True)
 
     # (1) 조사 개요
     st.subheader("설문 조사 개요")

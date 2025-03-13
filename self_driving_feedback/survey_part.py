@@ -47,6 +47,6 @@ def show_survey():
 
     # (D) 설문 제출 버튼
     if st.button("설문 제출"):
-        st.success("설문이 성공적으로 제출되었습니다.")
-        # 실제로는 q1, q2 등 데이터 저장 로직(CSV/DB 등) 구현 가능
-        # ex) st.session_state['survey_data'] = {...}
+        st.success("설문이 성공적으로 완료되었습니다.")
+    #     # 실제로는 q1, q2 등 데이터 저장 로직(CSV/DB 등) 구현 가능
+    #     # ex) st.session_state['survey_data'] = {...}
