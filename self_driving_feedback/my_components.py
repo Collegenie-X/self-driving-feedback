@@ -9,9 +9,11 @@ def checkbox_scale(question_text, scale_values, key_prefix):
     - key_prefix: 세션 키 식별용 prefix (문항별로 고유)
     반환값: 사용자가 체크한 항목(리스트)
     """
-    st.write(question_text)
+    col1, col2 = st.columns([3, 5])
+
+    col1.write(question_text)
     selected = []
-    list_cols = st.columns(5)
+    list_cols = col2.columns([1, 1, 1, 1, 1])
 
     for idx, val in enumerate(scale_values):
         # 체크박스
