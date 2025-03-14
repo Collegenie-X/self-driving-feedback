@@ -13,10 +13,12 @@ def checkbox_scale(question_text, scale_values, key_prefix):
 
     col1.write(question_text)
     selected = []
+
     list_cols = col2.columns([1, 1, 1, 1, 1])
 
     for idx, val in enumerate(scale_values):
         # 체크박스
         if list_cols[idx].checkbox(str(val), key=f"{key_prefix}_{val}"):
+
             selected.append(val)
     return selected

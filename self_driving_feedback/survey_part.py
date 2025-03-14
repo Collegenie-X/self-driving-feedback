@@ -38,6 +38,7 @@ def show_survey():
 
         # 컨테이너에 스타일 추가 (너비 조정)
 
+
         scale_labels = [
             "매우 불만족(1)",
             "불만족(2)",
@@ -173,3 +174,4 @@ def show_survey():
             st.success("설문이 성공적으로 제출되었습니다.")
             # 실제로는 q1, q2 등 데이터 저장 로직(CSV/DB 등) 구현 가능
             # ex) st.session_state['survey_data'] = {...}
+

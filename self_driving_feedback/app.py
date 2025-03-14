@@ -23,6 +23,7 @@ def main():
 
     with tabs[0]:
         # 미리보기, 내보내기 버튼 (위치 조정 가능)
+
         col1, col2, col3 = st.columns([7, 1, 1])
 
         with col2:
@@ -35,7 +36,9 @@ def main():
         show_survey()
 
     with tabs[1]:
+
         col1, col2, col3 = st.columns([7, 1, 1])
+
 
         with col2:
             st.button("미리보기", key="preview_result")

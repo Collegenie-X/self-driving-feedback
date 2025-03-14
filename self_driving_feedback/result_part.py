@@ -74,6 +74,7 @@ def radar_chart(
 
 def show_result():
 
+
     st.markdown(
         "<h2 style='text-align: center;'>자율 주행 시스템 만족도 분석 결과 </h2>",
         unsafe_allow_html=True,
