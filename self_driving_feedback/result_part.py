@@ -67,8 +67,8 @@ def radar_chart(
     ax.tick_params(axis="y", labelsize=label_fontsize)  # r축(거리축) 폰트 크기
 
     # 차트 제목 설정 (폰트 크기와 위치)
-    ax.set_title(title, y=1.08, fontsize=title_fontsize)
-
+    # ax.set_title(title, y=1.08, fontsize=title_fontsize)
+    #
     return fig, ax
 
 
@@ -178,9 +178,9 @@ def show_result():
             title="주행 승차감",
             color="blue",
             alpha=0.3,
-            max_radius=12,  # 0~10 범위로 고정
-            figsize=(3, 3),  # 그림 크기(가로4, 세로4 인치)
-            label_fontsize=8,  # 축 라벨 폰트 사이즈
+            max_radius=11,  # 0~10 범위로 고정
+            figsize=(2, 2),  # 그림 크기(가로4, 세로4 인치)
+            label_fontsize=5,  # 축 라벨 폰트 사이즈
             title_fontsize=9,  # 제목 폰트 사이즈
         )
         st.write("**주행 승차감 분석**")
@@ -233,16 +233,13 @@ def show_result():
             title="전반 만족도",
             color="green",
             alpha=0.3,
-            max_radius=12,
-            figsize=(3, 3),
-            label_fontsize=8,
+            max_radius=11,
+            figsize=(2, 2),
+            label_fontsize=5,
             title_fontsize=9,
         )
         st.write("**전반 만족도 추천**")
         st.pyplot(fig2)
 
     # (4) 보고서 코멘트
-    st.subheader("보고서 코멘트")
-    comment = st.text_area("분석자가 남기는 코멘트:")
-    if st.button("코멘트 저장"):
-        st.success("코멘트가 저장되었습니다.")
+    comment = st.text_area("AI 분석 코멘트 ")
