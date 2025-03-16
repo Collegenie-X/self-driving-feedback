@@ -74,7 +74,6 @@ def radar_chart(
 
 def show_result():
 
-
     st.markdown(
         "<h2 style='text-align: center;'>자율 주행 시스템 만족도 분석 결과 </h2>",
         unsafe_allow_html=True,
@@ -181,7 +180,7 @@ def show_result():
             alpha=0.3,
             max_radius=11,  # 0~10 범위로 고정
             figsize=(2, 2),  # 그림 크기(가로4, 세로4 인치)
-            label_fontsize=5,  # 축 라벨 폰트 사이즈
+            label_fontsize=4,  # 축 라벨 폰트 사이즈
             title_fontsize=9,  # 제목 폰트 사이즈
         )
         st.write("**주행 승차감 분석**")
@@ -236,7 +235,7 @@ def show_result():
             alpha=0.3,
             max_radius=11,
             figsize=(2, 2),
-            label_fontsize=5,
+            label_fontsize=4,
             title_fontsize=9,
         )
         st.write("**전반 만족도 추천**")
