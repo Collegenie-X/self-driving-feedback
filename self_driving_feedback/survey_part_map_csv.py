@@ -138,4 +138,32 @@ def show_survey():
         st.success("설문이 성공적으로 제출되었습니다.")
         st.write("**[설문 결과 딕셔너리]**", survey_data)
 
-       
+        # CSV 저장 부분에서 value만 저장
+        csv_data = {
+            "user_id": user_id,
+            "age": int(age),
+            "gender": gender_val,
+            "region": region,
+        }
+
+        # 각 문항에 대해 value만 저장
+        for group in question_groups:
+            for q, label in zip(group["question_list"], responses.values()):
+                csv_data[q[1]] = parse_scale_label(label)  # value만 저장
+
+        # CSV가 이미 존재하는지 확인하고, 존재하면 header 없이 값만 저장
+        file_path = './data/survey_results.csv'
+        if pd.io.common.file_exists(file_path):
+            df = pd.DataFrame([csv_data])  # 한 사람의 결과를 데이터프레임으로 변환
+            df.to_csv(file_path, mode='a', header=False, index=False)  # 헤더 없이 데이터 추가
+        else:
+            df = pd.DataFrame([csv_data])  # 한 사람의 결과를 데이터프레임으로 변환
+            df.to_csv(file_path, mode='w', header=True, index=False)  # 헤더와 함께 첫 번째로 저장
+
+        st.write("**CSV 파일에 저장되었습니다.**")
+        st.download_button(
+            label="CSV 파일 다운로드",
+            data=df.to_csv(index=False).encode('utf-8'),
+            file_name='./data/survey_results.csv',
+            mime='text/csv'
+        )

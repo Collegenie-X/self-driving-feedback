@@ -1,5 +1,5 @@
 import streamlit as st
-from survey_part import show_survey
+from survey_part_map_csv import show_survey
 from result_part import show_result
 
 
