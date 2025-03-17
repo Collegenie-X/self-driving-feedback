@@ -10,7 +10,7 @@ def main():
         """
         <style>
         .block-container {
-            max-width: 1100px; /* 세미콜론(;) 꼭 붙입니다 */
+            max-width: 1100px; /* 세미콜론(;) */
             margin: 0 auto;   /* 가운데 정렬 */
         }
         </style>

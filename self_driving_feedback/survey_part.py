@@ -14,9 +14,9 @@ def show_survey():
 
     st.write("ID를 입력해 주세요.")
     user_id = st.text_input(
-        "ID를 입력해 주세요.",
+        label= "ID를 입력해 주세요.",        
         key="user_id",
-        placeholder="예: niecut79",
+        placeholder="예: niecut79 (중복 설문을 방지하기 위함입니다.)",
         label_visibility="collapsed",
     )
 
@@ -25,6 +25,7 @@ def show_survey():
         "나이를 입력하세요",
         min_value=1,
         max_value=100,
+        value=25,
         step=1,
         key="age",
     )
