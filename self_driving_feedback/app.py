@@ -39,7 +39,6 @@ def main():
 
         col1, col2, col3 = st.columns([7, 1, 1])
 
-
         with col2:
             st.button("미리보기", key="preview_result")
 

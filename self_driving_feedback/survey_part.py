@@ -12,9 +12,9 @@ def show_survey():
     st.subheader("응답자 정보")
     st.divider()
 
-    st.write("ID를 입력해 주세요.")
+    st.write("**ID를 입력해 주세요.**")
     user_id = st.text_input(
-        label= "ID를 입력해 주세요.",        
+        label="ID를 입력해 주세요.",
         key="user_id",
         placeholder="예: niecut79 (중복 설문을 방지하기 위함입니다.)",
         label_visibility="collapsed",
