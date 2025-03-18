@@ -156,3 +156,8 @@ def show_survey():
 
         st.success("설문이 성공적으로 제출되었습니다.")
         st.write("**[설문 결과 딕셔너리]**", survey_data)
+
+        if st.button("설문 다시 하기 "):
+
+            st.session_state.clear()  # 모든 값 초기화
+            st.experimental_rerun()  # 페이지를 새로고침하여 초기화된 상태로 돌아가기
