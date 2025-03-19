@@ -75,6 +75,22 @@ def radar_chart(
 def show_result():
 
     st.markdown(
+        """
+            <style> 
+            .st-emotion-cache-1104ytp li {
+                color: #e67e22; 
+                }
+                
+            .st-emotion-cache-1104ytp strong{
+                color: #34495e;   
+               }
+            
+            </style> 
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
         "<h2 style='text-align: center;'>자율 주행 시스템 만족도 분석 결과 </h2>",
         unsafe_allow_html=True,
     )
@@ -82,7 +98,7 @@ def show_result():
     # (1) 조사 개요
     st.subheader("설문 조사 개요")
     st.divider()
-    st.write("- **설문 조사 기간**: 2025.03.14 ~ 2025.03.26 (12일간)")
+    st.write("- **설문 조사 기간**: 2025.03.14 ~ 2025.03.26 **(12일간)**")
     st.write("- **전체 응답자 수**: 120명")
 
     st.divider()
