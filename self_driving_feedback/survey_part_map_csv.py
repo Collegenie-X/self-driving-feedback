@@ -135,9 +135,10 @@ def show_survey():
             st.error("나이를 정확히 입력하세요.")
             return
 
-        if None in responses.values():
-            st.error("모든 질문(Q1~Q16)에 대해 체크해주세요.")
-            return
+        for idx, value in enumerate(responses.values()):
+            if value == None:
+                st.error(f"질문 Q[{idx+1}]에 대해 체크해주세요.")
+                return
 
         # 2) 딕셔너리로 구성
         survey_data = {
@@ -165,6 +166,8 @@ def show_survey():
             "age": int(age),
             "gender": gender_val,
             "region": region,
+            # "q1": 4,
+            # "q2": 5
         }
 
         # 각 문항에 대해 value만 저장
