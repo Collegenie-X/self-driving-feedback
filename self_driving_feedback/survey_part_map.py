@@ -133,9 +133,11 @@ def show_survey():
             st.error("나이를 정확히 입력하세요.")
             return
 
-        if None in responses.values():
-            st.error("모든 질문(Q1~Q16)에 대해 체크해주세요.")
-            return
+        ## response = {q1: None, q2: "매우 불만족(1)"}
+        for idx, value in enumerate(responses.values()):
+            if value == None:
+                st.error(f"질문 Q[{idx+1}]에 대해 체크해주세요.")
+                return
 
         # 2) 딕셔너리로 구성
         survey_data = {

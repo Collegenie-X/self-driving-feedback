@@ -17,7 +17,7 @@ python  main.py
 ## Streamlit 실행 
 
 ```
-streamlit run main.py 
+streamlit run app.py 
 ```
 
 

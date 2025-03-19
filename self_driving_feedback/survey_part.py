@@ -13,9 +13,6 @@ def show_survey():
     st.divider()
 
     st.write("**ID를 입력해 주세요.**")
-    user_id_value = None
-    age_value = None
-    gender_str_value = None
 
     user_id = st.text_input(
         label="ID를 입력해 주세요.",
@@ -28,20 +25,19 @@ def show_survey():
     age = st.number_input(
         "나이를 입력하세요",
         min_value=1,
-        max_value=100,
-        value=25,
+        max_value=65,
+        value=31,
         step=1,
         key="age",
     )
     # 성별 -> True/False
     gender_str = st.radio("성별을 선택하세요.", ["남성", "여성"], key="gender")
-    # gender를 Boolean으로 저장(남성 = True, 여성 = False)
     gender_val = True if gender_str == "남성" else False
 
     # 거주 지역
     region = st.selectbox(
         "거주 지역을 선택하세요.",
-        ["서울", "경기/인천", "충청/대전", "전라/광주", "경상/부산", "강원/제주"],
+        ["서울", "경기/인천", "충청/대전", "전라/광주", "경상/부산", "강원", "제주"],
         key="region",
     )
 
