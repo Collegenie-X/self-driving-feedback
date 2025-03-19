@@ -27,14 +27,14 @@ def checkbox_scale_single(question_text, scale_values, key_prefix):
     if f"{key_prefix}_selected" not in st.session_state:
         st.session_state[f"{key_prefix}_selected"] = None
 
-    # print("-----------------------------------------------")
-    # print("key_prefix:", key_prefix)
-    # print()
-    # print("question_text:", question_text)
-    # print()
-    # # for q in st.session_state:
-    # #     print(f"{q}: {st.session_state[q]}")
-    # print("-----------------------------------------------")
+    #### print("-----------------------------------------------")
+    #### print("key_prefix:", key_prefix)
+    #### print()
+    #### print("question_text:", question_text)
+    #### print()
+    #### # for q in st.session_state:
+    #### #     print(f"{q}: {st.session_state[q]}")
+    #### print("-----------------------------------------------")
 
     # 레이아웃: 왼쪽(질문), 오른쪽(체크박스들)
     col1, col2 = st.columns([3, 5])

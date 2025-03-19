@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 import re
 
 # 한글 폰트 설정 (macOS: AppleGothic, Windows: Malgun Gothic)
-plt.rcParams["font.family"] = "AppleGothic"
+plt.rcParams["font.family"] = "Malgun Gothic"  # Windows에서 한글을 지원하는 폰트
+# plt.rcParams["font.family"] = "AppleGothic"
 plt.rcParams["axes.unicode_minus"] = False
 
 
