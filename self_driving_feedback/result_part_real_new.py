@@ -111,20 +111,32 @@ def show_result():
 
     pie_chart = (
         alt.Chart(gender_counts)
-        .mark_arc(outerRadius=80)  # 파이 반경 축소
+        .mark_arc(outerRadius=100)  # 파이 반경
         .encode(
             theta=alt.Theta(field="count", type="quantitative"),
             color=alt.Color(field="gender", type="nominal"),
             tooltip=["gender", "count"],
         )
+        # 퍼센트 계산
         .transform_calculate(
             Percent="round((datum.count / {0})*100)".format(total_count)
         )
-        .properties(width=220, height=220)  # 전체 차트 크기 축소
+        .properties(width=300, height=300)
     )
 
-    text_chart = pie_chart.mark_text(radius=100, size=12).encode(
-        text=alt.Text("Percent:Q", format="^.0f")
+    # mark_text()로 텍스트 위치 조정
+    text_chart = (
+        pie_chart.mark_text(
+            radius=130,       # 파이보다 30px 정도 바깥
+            size=12,
+            align="center",   
+            baseline="middle",
+            dx=0,             # x축 미세 조정
+            dy=0              # y축 미세 조정
+        )
+        .encode(
+            text=alt.Text("Percent:Q", format="^.0f")
+        )
     )
 
     ######################## (3) 지역별 응답자 분포 ###############################
