@@ -226,7 +226,7 @@ def show_result():
             # (1) x축 레이블 가로로 배치
             x=alt.X("영역:N", sort=None, axis=alt.Axis(labelAngle=0)), 
             # (2) y축은 0~5 범위
-            y=alt.Y("평균점수:Q", scale=alt.Scale(domain=[0, 5])),
+            y=alt.Y("평균점수:Q", scale=alt.Scale(domain=[0, 2])),
             tooltip=["영역:N", "평균점수:Q"],
             )
         )
