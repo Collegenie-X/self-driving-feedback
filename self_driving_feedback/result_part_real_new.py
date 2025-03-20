@@ -25,7 +25,7 @@ def radar_chart(
     angles = np.concatenate((angles, [angles[0]]))
 
     fig, ax = plt.subplots(figsize=figsize, subplot_kw={"projection": "polar"})
-    ax.plot(angles, values, color=color, linewidth=2)
+    ax.plot(angles, values, color=color, linewidth=1)
     ax.fill(angles, values, color=color, alpha=alpha)
     ax.set_theta_offset(np.pi / 2)
     ax.set_theta_direction(-1)
@@ -111,7 +111,7 @@ def show_result():
 
     pie_chart = (
         alt.Chart(gender_counts)
-        .mark_arc(outerRadius=100)  # 파이 반경
+        .mark_arc(outerRadius=120)  # 파이 반경
         .encode(
             theta=alt.Theta(field="count", type="quantitative"),
             color=alt.Color(field="gender", type="nominal"),
@@ -119,7 +119,7 @@ def show_result():
         )
         # 퍼센트 계산
         .transform_calculate(
-            Percent="round((datum.count / {0})*100)".format(total_count)
+            Percent="(round((datum.count / {0})*100)) + '%'".format(total_count)
         )
         .properties(width=300, height=300)
     )
@@ -128,14 +128,14 @@ def show_result():
     text_chart = (
         pie_chart.mark_text(
             radius=130,       # 파이보다 30px 정도 바깥
-            size=12,
+            size=16,
             align="center",   
             baseline="middle",
             dx=0,             # x축 미세 조정
-            dy=0              # y축 미세 조정
+            dy=2              # y축 미세 조정
         )
         .encode(
-            text=alt.Text("Percent:Q", format="^.0f")
+             text=alt.Text("Percent:N")
         )
     )
 
@@ -216,7 +216,7 @@ def show_result():
             categories=categories_drive,            
             color="blue",
             alpha=0.3,
-            max_radius=4,
+            max_radius=5,
             figsize=(2, 2),
             label_fontsize=4,            
         )
@@ -255,7 +255,7 @@ def show_result():
         )
 
         st.altair_chart(
-            (chart_emerg + text_emerg).properties(width=300, height=500),
+            (chart_emerg + text_emerg).properties(width=300, height=400),
             use_container_width=True
         )
 
@@ -271,7 +271,7 @@ def show_result():
             alt.Chart(df_parking)
             .mark_bar()
             .encode(
-                x=alt.X("영역:N", sort=None , axis=alt.Axis(labelAngle=0)),
+                x=alt.X("영역:N", sort=None , axis=alt.Axis(labelAngle= 0)),
                 y=alt.Y("평균점수:Q", scale=alt.Scale(domain=[0, 5])),
                 tooltip=["영역:N", "평균점수:Q"],
             )
@@ -287,7 +287,7 @@ def show_result():
         )
 
         st.altair_chart(
-            (chart_parking + text_parking).properties(width=300, height=500)
+            (chart_parking + text_parking).properties(width=300, height=400)
         )
 
     with row2_col2:
@@ -298,9 +298,9 @@ def show_result():
             categories=categories_overall,            
             color="green",
             alpha=0.3,
-            max_radius=4,
+            max_radius=5,
             figsize=(2, 2),
-            label_fontsize=4,            
+            label_fontsize=3,            
         )
         st.write("**전반 만족도 분석**")
         st.pyplot(fig2)
