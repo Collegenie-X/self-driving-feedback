@@ -34,6 +34,7 @@ if chart_menu == "선 그래프":
         {
             "날짜": pd.date_range("2023-01-01", periods=100),
             "매출": np.random.randint(100, 500, 100),
+            "수입": np.random.randint(100 * 0.25, 500 * 0.3, 100),
         }
     )
 
@@ -97,7 +98,7 @@ if chart_menu == "선 그래프":
     ax.set_title("sin(x) 및 cos(x) 선 그래프")
     ax.set_xlabel("X축")
     ax.set_ylabel("Y축")
-    ax.legend()
+    ax.legend(loc="upper left")
     ax.grid(True)
 
     st.pyplot(fig)
@@ -106,8 +107,14 @@ if chart_menu == "선 그래프":
 elif chart_menu == "막대 그래프":
     st.subheader("🔸 막대 그래프")
 
-    data = pd.DataFrame({"Category": ["A", "B", "C", "D"], "Value": [23, 45, 56, 78]})
-    st.bar_chart(data.set_index("Category"))
+    data = pd.DataFrame(
+        {
+            "name": ["kim", "lee", "park", "choei"],
+            "Category": ["A", "B", "C", "D"],
+            "Value": [23, 45, 56, 78],
+        }
+    )
+    st.bar_chart(data[["Category", "Value"]].set_index("Category"))
 
     st.write("Matplotlib로 표현한 막대 그래프")
     fig, ax = plt.subplots(figsize=(8, 4))
@@ -123,7 +130,9 @@ elif chart_menu == "막대 그래프":
 elif chart_menu == "영역 그래프":
     st.subheader("🔺 영역 그래프")
 
-    df_area = pd.DataFrame({"sin(x)": y1, "cos(x)": y2}, index=x)
+    df_area = pd.DataFrame({"sin(x)": y1}, index=x)
+    st.write("x:", x)
+    st.write("y:", y1, y2)
     st.area_chart(df_area)
 
 # 4. 히스토그램
@@ -132,7 +141,7 @@ elif chart_menu == "히스토그램":
 
     data = np.random.randn(1000)
     fig, ax = plt.subplots(figsize=(8, 4))
-    ax.hist(data, bins=30, color="purple", alpha=0.7)
+    ax.hist(data, bins=10, color="pink", alpha=0.7)
     ax.set_title("정규 분포 히스토그램")
     ax.set_xlabel("값")
     ax.set_ylabel("빈도")
@@ -149,7 +158,7 @@ elif chart_menu == "산점도":
             "X값": np.random.rand(100),
             "Y값": np.random.rand(100),
             "크기": np.random.rand(100) * 200,
-            "색상": np.random.rand(100),
+            "색상": np.random.rand(100) * 10,
         }
     )
 

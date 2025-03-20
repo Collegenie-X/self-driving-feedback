@@ -5,6 +5,12 @@ import altair as alt
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 
+
+# 한글 폰트 설정 (Ubuntu 서버 등에서 나눔 폰트 설치 필요)
+
+rcParams["font.family"] = "Malgun Gothic"  # Malgun Gothic , AppleGothic
+rcParams["axes.unicode_minus"] = False
+
 x = np.linspace(0, 10, 100)
 y1 = np.sin(x)
 y2 = np.cos(x)
@@ -117,11 +123,13 @@ ax.set_ylabel("값", fontsize=14)
 ax.grid(True, axis="y", linestyle="--", alpha=0.7)
 
 # 각 막대 위에 값 표시
-for bar in bars:
+for idx, bar in enumerate(bars):
+
     height = bar.get_height()
+    st.write("bars", (bar.get_x() + bar.get_width() / 2, height))
     ax.annotate(
         f"{height}",
-        xy=(bar.get_x() + bar.get_width() / 2, height),
+        xy=(idx, height),
         xytext=(0, 3),
         textcoords="offset points",
         ha="center",
@@ -146,11 +154,11 @@ ax.set_ylabel("과일 종류", fontsize=14)
 ax.grid(True, axis="x", linestyle=":", alpha=0.7)
 
 # 값 표시
-for bar in bars:
+for idx, bar in enumerate(bars):
     width = bar.get_width()
     ax.annotate(
         f"{width}",
-        xy=(width, bar.get_y() + bar.get_height() / 2),
+        xy=(width, idx),
         xytext=(5, 0),
         textcoords="offset points",
         va="center",
