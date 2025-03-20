@@ -20,6 +20,10 @@ python  main.py
 streamlit run app.py 
 ```
 
+```
+cd .\pandas\
+```
+
 
 ## 실행 범위만 실행 
 ```
@@ -40,6 +44,9 @@ pyton3 -m venv venv
 pip install -r .\requirements.txt 
 ```
 
+```
+streamlit run .\streamlit_1_chart.py
+```
 
 ## pip install 
 
