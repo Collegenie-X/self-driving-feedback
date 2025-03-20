@@ -6,8 +6,8 @@ import altair as alt
 
 import matplotlib.pyplot as plt
 
-plt.rcParams["font.family"] = "AppleGothic"  # macOS font that supports Hangul
-# plt.rcParams["font.family"] = "Malgun Gothic"  # Windows에서 한글을 지원하는 폰트
+# plt.rcParams["font.family"] = "AppleGothic"  # macOS font that supports Hangul
+plt.rcParams["font.family"] = "Malgun Gothic"  # Windows에서 한글을 지원하는 폰트
 plt.rcParams["axes.unicode_minus"] = False  # Ensure minus sign is displayed correctly
 
 
