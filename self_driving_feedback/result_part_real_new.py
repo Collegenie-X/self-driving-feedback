@@ -5,7 +5,7 @@ import altair as alt
 import matplotlib.pyplot as plt
 
 # 한글 폰트 설정 (Windows 기준: Malgun Gothic)
-plt.rcParams["font.family"] = "Malgun Gothic"
+plt.rcParams["font.family"] = "AppleGothic"
 plt.rcParams["axes.unicode_minus"] = False
 
 
@@ -13,13 +13,11 @@ plt.rcParams["axes.unicode_minus"] = False
 def radar_chart(
     values,
     categories,
-    title="레이더 차트",
     color="blue",
     alpha=0.3,
     max_radius=None,
-    figsize=(4, 4),
-    label_fontsize=8,
-    title_fontsize=10,
+    figsize=(1.2, 1.2),
+    label_fontsize=4,
 ):
     N = len(categories)
     angles = np.linspace(0, 2 * np.pi, N, endpoint=False)
@@ -29,7 +27,7 @@ def radar_chart(
     fig, ax = plt.subplots(figsize=figsize, subplot_kw={"projection": "polar"})
     ax.plot(angles, values, color=color, linewidth=1)
     ax.fill(angles, values, color=color, alpha=alpha)
-    ax.set_theta_offset(np.pi / 2)
+    ax.set_theta_offset(np.pi / 3)
     ax.set_theta_direction(-1)
     ax.set_xticks(angles[:-1])
     ax.set_xticklabels(categories, fontsize=label_fontsize)
@@ -38,7 +36,6 @@ def radar_chart(
         ax.set_ylim(0, max_radius)
 
     ax.tick_params(axis="y", labelsize=label_fontsize)
-    ax.set_title(title, y=1.08, fontsize=title_fontsize)
     return fig, ax
 
 
@@ -86,21 +83,21 @@ def show_result():
     data["age_group"] = pd.cut(data["age"], bins=bins, labels=labels, right=False)
 
     age_group_counts = (
-        data["age_group"].value_counts().rename_axis("나이대").reset_index(name="Count")
+        data["age_group"].value_counts().rename_axis("연령별").reset_index(name="Count")
     )
 
     chart_age = (
         alt.Chart(age_group_counts)
         .mark_bar()
         .encode(
-            x=alt.X("나이대:N", sort=None, axis=alt.Axis(labelAngle=0)),  # 레이블 수평
+            x=alt.X("연령별:N", sort=None, axis=alt.Axis(labelAngle=0)),  # 레이블 수평
             y=alt.Y("Count:Q"),
-            tooltip=["나이대:N", "Count:Q"],
+            tooltip=["연령별:N", "Count:Q"],
         )
         .properties(width=300, height=250)  # 차트 크기 축소
     )
 
-    text_age = chart_age.mark_text(dy=-5, fontSize=12).encode(text="Count:Q")
+    text_age = chart_age.mark_text(dy=-6, fontSize=12).encode(text="Count:Q")
 
     # (2) 성별 분포 (Pie Chart)
     # gender: True/False -> 여성/남성 변환
@@ -111,65 +108,64 @@ def show_result():
 
     pie_chart = (
         alt.Chart(gender_counts)
-        .mark_arc(outerRadius=100)  # 파이 반경
+        .mark_arc(outerRadius=130)  # 파이 반경
         .encode(
             theta=alt.Theta(field="count", type="quantitative"),
             color=alt.Color(field="gender", type="nominal"),
             tooltip=["gender", "count"],
         )
+        # 퍼센트 계산 (문자열 형태로 만들면서 % 기호까지 붙이기)
         .transform_calculate(
             Percent="(round((datum.count / {0})*100)) + '%'".format(total_count)
         )
-        .properties(width=220, height=220)  # 전체 차트 크기 축소
+        .properties(width=350, height=350)
     )
 
-    # mark_text()로 텍스트 위치 조정
-    text_chart = (
-        pie_chart.mark_text(
-            radius=130,       # 파이보다 30px 정도 바깥
-            size=12,
-            align="center",   
-            baseline="middle",
-            dx=0,             # x축 미세 조정
-            dy=0              # y축 미세 조정
-        )
-        .encode(
-            text=alt.Text("Percent:Q", format="^.0f")
-        )
+    # 텍스트(레이블) 설정
+    text_chart = pie_chart.mark_text(
+        radius=130,  # 파이보다 약간 바깥
+        size=16,
+        align="center",
+        baseline="middle",
+        dx=0,
+        dy=15,
+    ).encode(
+        # transform_calculate에서 만든 Percent는 문자열이므로 type='nominal'로 매핑
+        text=alt.Text("Percent:N")
     )
 
     # (3) 지역별 응답자 분포
     region_counts = (
-        data["region"].value_counts().rename_axis("region").reset_index(name="Count")
+        data["region"].value_counts().rename_axis("지역별").reset_index(name="Count")
     )
 
     chart_region = (
         alt.Chart(region_counts)
         .mark_bar()
         .encode(
-            x=alt.X("region:N", sort=None, axis=alt.Axis(labelAngle=0)),  # 라벨 수평
+            x=alt.X("지역별:N", sort=None, axis=alt.Axis(labelAngle=0)),  # 라벨 수평
             y="Count:Q",
-            tooltip=["region:N", "Count:Q"],
+            tooltip=["지역별:N", "Count:Q"],
         )
-        .properties(width=300, height=250)
+        .properties(width=300, height=450)
     )
 
-    text_region = chart_region.mark_text(dy=-5, fontSize=12).encode(
+    text_region = chart_region.mark_text(dy=-10, fontSize=12).encode(
         text=alt.Text("Count:Q")
     )
 
     # Streamlit 레이아웃
     col1, col2 = st.columns(2)
     with col1:
-        st.subheader("나이대별 응답자 분포")
+        st.write("**연령별 응답자 분포**")
         st.altair_chart(chart_age + text_age, use_container_width=True)
 
-    with col2:
-        st.subheader("지역별 응답자 분포")
-        st.altair_chart(chart_region + text_region, use_container_width=True)
+        st.write("**성별 분포 (%)**")
+        st.altair_chart(pie_chart + text_chart, use_container_width=True)
 
-    st.subheader("성별 분포 (%)")
-    st.altair_chart(pie_chart + text_chart, use_container_width=True)
+    with col2:
+        st.write("**지역별 응답자 분포**")
+        st.altair_chart(chart_region + text_region, use_container_width=True)
 
     st.divider()
     st.subheader("만족도 분석 강화")
@@ -210,12 +206,10 @@ def show_result():
         fig1, ax1 = radar_chart(
             values=values_drive,
             categories=categories_drive,
-            title="주행 승차감",
             color="blue",
             alpha=0.3,
-            max_radius=4,
-            figsize=(2, 2),
-            label_fontsize=4,            
+            max_radius=5,
+            label_fontsize=4,
         )
         st.write("**주행 승차감 분석**")
         st.pyplot(fig1)
@@ -230,19 +224,22 @@ def show_result():
             alt.Chart(df_emergency)
             .mark_bar()
             .encode(
-                x=alt.X("영역:N", sort=None),
+                x=alt.X("영역:N", sort=None, axis=alt.Axis(labelAngle=0)),
                 y=alt.Y("평균점수:Q", scale=alt.Scale(domain=[0, 5])),
                 tooltip=["영역:N", "평균점수:Q"],
             )
         )
 
-        text_emerg = chart_emerg.mark_text(dy=-5, fontSize=12).encode(
-            text=alt.Text("평균점수:Q", format=".2f")
-        )
+        text_emerg = chart_emerg.mark_text(
+            align="center",
+            baseline="bottom",
+            dy=-5,  # y값 표시 위치를 조금 더 위로
+            fontSize=12,
+        ).encode(text=alt.Text("평균점수:Q", format=".2f"))
 
         st.altair_chart(
             (chart_emerg + text_emerg).properties(width=300, height=500),
-            use_container_width=True
+            use_container_width=True,
         )
 
     row2_col1, row2_col2 = st.columns(2)
@@ -256,15 +253,18 @@ def show_result():
             alt.Chart(df_parking)
             .mark_bar()
             .encode(
-                x=alt.X("영역:N", sort=None , axis=alt.Axis(labelAngle=0)),
+                x=alt.X("영역:N", sort=None, axis=alt.Axis(labelAngle=0)),
                 y=alt.Y("평균점수:Q", scale=alt.Scale(domain=[0, 5])),
                 tooltip=["영역:N", "평균점수:Q"],
             )
         )
 
-        text_parking = chart_parking.mark_text(dy=-5, fontSize=12).encode(
-            text=alt.Text("평균점수:Q", format=".2f")
-        )
+        text_parking = chart_parking.mark_text(
+            align="center",
+            baseline="bottom",
+            dy=-5,  # y값 표시 위치를 조금 더 위로
+            fontSize=12,
+        ).encode(text=alt.Text("평균점수:Q", format=".2f"))
 
         st.altair_chart(
             (chart_parking + text_parking).properties(width=300, height=500)
@@ -275,12 +275,10 @@ def show_result():
         fig2, ax2 = radar_chart(
             values=values_overall,
             categories=categories_overall,
-            title="전반 만족도",
             color="green",
             alpha=0.3,
-            max_radius=4,
-            figsize=(2, 2),
-            label_fontsize=4,            
+            max_radius=5,
+            label_fontsize=4,
         )
         st.write("**전반 만족도 분석**")
         st.pyplot(fig2)
