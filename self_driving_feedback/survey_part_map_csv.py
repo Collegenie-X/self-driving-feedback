@@ -132,10 +132,10 @@ def show_survey():
             st.error("아이디를 5글자 이상 입력하세요.")
             return
 
-        df = pd.read_csv("./data/survey_results.csv")
+        df = pd.read_csv("./data/survey_results.csv")  ### csv 
         # st.write(df["user_id"])
         for id in df["user_id"]:
-            if user_id.strip().lower() == str(id).strip().lower():
+            if user_id.strip().lower() == str(id).strip().lower(): 
                 st.error(
                     f"{user_id} 아이디는 이미 존재합니다. 다시 user id를 입력해 주세요."
                 )
