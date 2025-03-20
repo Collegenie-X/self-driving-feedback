@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib import rcParams
 
 # 한글 폰트 설정 (Ubuntu 서버 등에서 나눔 폰트 설치 필요)
-rcParams["font.family"] = "AppleGothic"
+rcParams["font.family"] = "Malgun Gothic"
 rcParams["axes.unicode_minus"] = False
 
 st.title("📊 다양한 차트 시각화 (Streamlit)")
