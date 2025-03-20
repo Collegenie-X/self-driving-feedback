@@ -13,11 +13,13 @@ plt.rcParams["axes.unicode_minus"] = False
 def radar_chart(
     values,
     categories,
+    title="레이더 차트",
     color="blue",
     alpha=0.3,
     max_radius=None,
-    figsize=(3, 3),
-    label_fontsize=8
+    figsize=(4, 4),
+    label_fontsize=8,
+    title_fontsize=10,
 ):
     N = len(categories)
     angles = np.linspace(0, 2 * np.pi, N, endpoint=False)
@@ -36,7 +38,7 @@ def radar_chart(
         ax.set_ylim(0, max_radius)
 
     ax.tick_params(axis="y", labelsize=label_fontsize)
-    # ax.set_title(title, y=1.08, fontsize=title_fontsize)
+    ax.set_title(title, y=1.08, fontsize=title_fontsize)
     return fig, ax
 
 
@@ -84,16 +86,16 @@ def show_result():
     data["age_group"] = pd.cut(data["age"], bins=bins, labels=labels, right=False)
 
     age_group_counts = (
-        data["age_group"].value_counts().rename_axis("연령대").reset_index(name="Count")
+        data["age_group"].value_counts().rename_axis("나이대").reset_index(name="Count")
     )
 
     chart_age = (
         alt.Chart(age_group_counts)
         .mark_bar()
         .encode(
-            x=alt.X("연령대:N", sort=None, axis=alt.Axis(labelAngle=0)),  # 레이블 수평
+            x=alt.X("나이대:N", sort=None, axis=alt.Axis(labelAngle=0)),  # 레이블 수평
             y=alt.Y("Count:Q"),
-            tooltip=["연령대:N", "Count:Q"],
+            tooltip=["나이대:N", "Count:Q"],
         )
         .properties(width=300, height=250)  # 차트 크기 축소
     )
@@ -148,19 +150,18 @@ def show_result():
     # Streamlit 레이아웃
     col1, col2 = st.columns(2)
     with col1:
-        st.write("나이대별 응답자 분포")
+        st.subheader("나이대별 응답자 분포")
         st.altair_chart(chart_age + text_age, use_container_width=True)
-        st.write("성별 분포 (%)")
-        st.altair_chart(pie_chart + text_chart, use_container_width=True)
-
 
     with col2:
-        st.write("지역별 응답자 분포")
+        st.subheader("지역별 응답자 분포")
         st.altair_chart(chart_region + text_region, use_container_width=True)
 
-    
+    st.subheader("성별 분포 (%)")
+    st.altair_chart(pie_chart + text_chart, use_container_width=True)
+
     st.divider()
-    st.write("만족도 분석 강화")
+    st.subheader("만족도 분석 강화")
     st.divider()
 
     # 영역별 평균 계산
@@ -198,11 +199,13 @@ def show_result():
         fig1, ax1 = radar_chart(
             values=values_drive,
             categories=categories_drive,
+            title="주행 승차감",
             color="blue",
             alpha=0.3,
-            max_radius=4,
-            figsize=(2, 2),
-            label_fontsize=4
+            max_radius=5,
+            figsize=(3, 3),
+            label_fontsize=8,
+            title_fontsize=12,
         )
         st.write("**주행 승차감 분석**")
         st.pyplot(fig1)
@@ -259,11 +262,13 @@ def show_result():
         fig2, ax2 = radar_chart(
             values=values_overall,
             categories=categories_overall,
+            title="전반 만족도",
             color="green",
             alpha=0.3,
-            max_radius=4,
-            figsize=(2, 2),
-            label_fontsize=4
+            max_radius=5,
+            figsize=(3, 3),
+            label_fontsize=8,
+            title_fontsize=12,
         )
         st.write("**전반 만족도 분석**")
         st.pyplot(fig2)
