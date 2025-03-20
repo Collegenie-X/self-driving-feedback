@@ -17,7 +17,11 @@ python  main.py
 ## Streamlit 실행 
 
 ```
-streamlit run main.py 
+streamlit run app.py 
+```
+
+```
+cd .\pandas\
 ```
 
 
@@ -37,9 +41,12 @@ pyton3 -m venv venv
 ```
 
 ```
-pip install -r requirements.txt 
+pip install -r .\requirements.txt 
 ```
 
+```
+streamlit run .\streamlit_1_chart.py
+```
 
 ## pip install 
 

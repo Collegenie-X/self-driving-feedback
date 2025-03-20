@@ -4,3 +4,7 @@ pandas
 pillow
 requests
 streamlit
+
+pip install -r .\requirements.txt
+
+cd pandas 
