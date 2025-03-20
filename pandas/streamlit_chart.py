@@ -1,6 +1,9 @@
 import streamlit as st
-import pandas as pd
 import numpy as np
+import pandas as pd
+import altair as alt
+import matplotlib.pyplot as plt
+from matplotlib import rcParams
 
 st.title("선 그래프 예시")
 
