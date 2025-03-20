@@ -1,3 +1,6 @@
+
+###  streamlit run app.py
+
 import streamlit as st
 from survey_part_map_csv import show_survey
 from result_part_real_new import show_result

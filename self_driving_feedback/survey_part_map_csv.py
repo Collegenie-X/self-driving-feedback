@@ -126,10 +126,20 @@ def show_survey():
 
     # (C) "설문 제출" 버튼 클릭 시 유효성 검사 + dict 생성
     if st.button("설문 제출"):
+
         # 1) 모든 문항이 선택되었는지 / 나이/성별/지역도 입력됐는지 검사
         if len(user_id) < 5:
             st.error("아이디를 5글자 이상 입력하세요.")
             return
+
+        df = pd.read_csv("./data/survey_results.csv")
+        # st.write(df["user_id"])
+        for id in df["user_id"]:
+            if user_id.strip().lower() == str(id).strip().lower():
+                st.error(
+                    f"{user_id} 아이디는 이미 존재합니다. 다시 user id를 입력해 주세요."
+                )
+                return
 
         if age < 1:
             st.error("나이를 정확히 입력하세요.")

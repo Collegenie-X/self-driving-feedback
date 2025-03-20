@@ -25,8 +25,8 @@ ax.plot(x, y2, label="cos(x)", linestyle="-", marker="x", color="red")
 ax.set_title("사인 & 코사인 그래프", fontsize=16, fontweight="bold")
 ax.set_xlabel("X축", fontsize=14)
 ax.set_ylabel("Y축", fontsize=14)
-ax.set_xlim(0, 10)
-ax.set_ylim(-1.5, 1.5)
+# ax.set_xlim(0, 10)
+# ax.set_ylim(-1.5, 1.5)
 ax.grid(True, linestyle=":", linewidth=0.5, alpha=0.7)
 ax.legend(loc="upper right", fontsize=12)
 
@@ -35,6 +35,7 @@ ax.set_xticks(np.arange(0, 11, 1))
 ax.tick_params(axis="x", rotation=45)
 
 # 주석 추가
+st.write("np.pi/2", np.pi / 2)
 ax.annotate(
     "sin(x) 최대",
     xy=(np.pi / 2, 1),
@@ -126,7 +127,8 @@ ax.grid(True, axis="y", linestyle="--", alpha=0.7)
 for idx, bar in enumerate(bars):
 
     height = bar.get_height()
-    st.write("bars", (bar.get_x() + bar.get_width() / 2, height))
+    st.write("bar", bar)
+    st.write("idx,height", (idx, height))
     ax.annotate(
         f"{height}",
         xy=(idx, height),
