@@ -62,12 +62,13 @@ pip install -r requirements.txt
 ### 자동차 자율 주행 실행하는 방법 
 
 ```
- pip install -r requirements.txt 
+ pip install -r requirements.txt  
 ```
 
 ```
  cd self_driving_feedback
- streamlit run app 
+ ls  ### (app.py가 있는지 확인) 
+ streamlit run app.py
 ```
 
 자동차 자율 주행 만족도 평가 설문지가 동작됩니다.  
