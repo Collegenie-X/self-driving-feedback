@@ -1,4 +1,5 @@
-# python_ex
+#### python을 데이터 중심으로 관리 및 학습하여 배우는 것이 목표입니다. 
+
 python, numpy, pandas, data analysitics 
 
 
@@ -56,3 +57,17 @@ pip freeze > requirements.txt
 ```
 pip install -r requirements.txt 
 ```
+########################################################################3
+
+### 자동차 자율 주행 실행하는 방법 
+
+```
+ pip install -r requirements.txt 
+```
+
+```
+ cd self_driving_feedback
+ streamlit run app 
+```
+
+자동차 자율 주행 만족도 평가 설문지가 동작됩니다.  
