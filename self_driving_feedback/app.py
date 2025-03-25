@@ -1,16 +1,33 @@
-
-###  streamlit run app.py
-
 import streamlit as st
 from survey_part_map_csv import show_survey
 from result_part_real_new import show_result
+from pdf_export import make_survey_report_pdf
 
 
 def display_header(key_value):
-    _, col2 = st.columns([7, 1])
+    _, col2 = st.columns([7, 2])
+
+    if "pdf_data" not in st.session_state:
+        st.session_state["pdf_data"] = None
 
     with col2:
-        st.button("내보내기", key=f"export_{key_value}")
+
+        left, right = st.columns(2)
+
+        with left:
+            if st.button("📄 내보내기", key=f"export_{key_value}"):
+                pdf_data = make_survey_report_pdf()
+                st.session_state["pdf_data"] = pdf_data  # 세션에 저장
+
+        with right:
+            if st.session_state["pdf_data"] is not None:
+                st.download_button(
+                    label="PDF 다운로드",
+                    data=st.session_state["pdf_data"],
+                    file_name="test_survey_report.pdf",
+                    mime="application/pdf",
+                    key=f"download_{key_value}",
+                )
 
 
 def main():
@@ -20,8 +37,8 @@ def main():
         """
         <style>
         .block-container {
-            max-width: 1200px; /* 세미콜론(;) */
-            margin: 0 auto;   /* 가운데 정렬 */
+            max-width: 1200px;
+            margin: 0 auto;
         }
         </style>
         """,
@@ -37,7 +54,6 @@ def main():
         show_survey()
 
     with tabs[1]:
-
         display_header("result")
         # 결과 부분
         show_result()

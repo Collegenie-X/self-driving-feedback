@@ -4,3 +4,5 @@ pandas
 pillow
 requests
 streamlit
+fpdf2
+vl-convert-python
