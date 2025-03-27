@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from my_components import checkbox_scale_single, parse_scale_label
+import os
 
 
 def show_survey():
@@ -199,12 +200,15 @@ def show_survey():
             )  # 헤더와 함께 첫 번째로 저장
 
         st.write("**CSV 파일에 저장되었습니다.**")
-        st.download_button(
-            label="CSV 파일 다운로드",
-            data=df.to_csv(index=False).encode("utf-8"),
-            file_name=file_path,
-            mime="text/csv",
-        )
+
+        if os.path.exists(file_path):
+            with open(file_path, "rb") as file:
+                st.download_button(
+                    label="CSV 파일 다운로드",
+                    data=file,
+                    file_name="survey_results.csv",
+                    mime="text/csv",
+                )
 
         if st.button("설문 다시 하기 "):
 
