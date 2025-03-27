@@ -96,7 +96,7 @@ def generate_pdf():
 def show_pdf(pdf_output):
     pdf_base64 = base64.b64encode(pdf_output.read()).decode("utf-8")
     st.markdown(
-        f'<iframe src="data:application/pdf;base64,{pdf_base64}" width="700" height="1000"></iframe>',
+        f'<iframe src="data:application/pdf;base64,{pdf_base64}" width="1000" height="600"></iframe>',
         unsafe_allow_html=True,
     )
 

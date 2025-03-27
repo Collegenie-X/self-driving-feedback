@@ -73,4 +73,6 @@ pip install -r requirements.txt
  streamlit run app.py
 ```
 
+streamlit run pdf_run.py
+
 자동차 자율 주행 만족도 평가 설문지가 동작됩니다.  

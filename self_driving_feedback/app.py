@@ -5,14 +5,14 @@ from pdf_export import make_survey_report_pdf
 
 
 def display_header(key_value):
-    _, col2 = st.columns([7, 2])
+    _, col2 = st.columns([7, 3])
 
     if "pdf_data" not in st.session_state:
         st.session_state["pdf_data"] = None
 
     with col2:
 
-        left, right = st.columns(2)
+        left, right = st.columns([1.4, 2])
 
         with left:
             if st.button("📄 내보내기", key=f"export_{key_value}"):
