@@ -10,9 +10,30 @@ from components.prompt_generator import generate_prompt
 from components.ai_comment import call_openai
 from components.output_parser import parse_output
 
+import json
+
 # 한글 폰트 설정 (Windows: Malgun Gothic, macOS: AppleGothic)
 plt.rcParams["font.family"] = "AppleGothic"
 plt.rcParams["axes.unicode_minus"] = False
+
+
+def open_ai_comment(analysis_stats):
+
+    prompt = generate_prompt(analysis_stats)
+    ai_raw_response = call_openai(prompt)
+
+    st.subheader("AI 원본 응답")
+    st.json(ai_raw_response)
+
+    ### JSON 파싱 시도
+
+    try:
+        parsed_json = json.loads(ai_raw_response)
+    except json.JSONDecodeError:
+        st.error("JSON 디코딩 실패! AI 응답이 JSON 형식이 아닙니다.")
+        parsed_json = {}
+
+    return parsed_json
 
 
 # 레이더 차트 (Matplotlib)
@@ -261,43 +282,33 @@ def show_result():
 
     # Streamlit 버튼: AI 코멘트 생성
     if st.button("AI 코멘트 생성"):
-        prompt = generate_prompt(analysis_stats)
-        ai_raw_response = call_openai(prompt)
+        st.error("OPEN AI에서 Comment를 처리중입니다........ ")
 
-        # ai_raw_response = {
-        #     "driving_comfort": {
-        #         "summary": "전반적으로 평탄하고 안정감 있는 주행 품질이 만족스럽다는 느낌을 받았습니다.",
-        #         "positive_opinion": "마치 운전자가 직접 조작하는 것처럼 자연스러운 주행이 인상적이었습니다. 또한, 섬세한 조작으로 승차감이 깔끔하게 전달되는 점이 대단했습니다.",
-        #         "negative_opinion": "그러나 조금 더 다양한 주행 상황에 대응할 수 있는 섬세한 주행 조작이 필요하다는 의견도 있습니다.",
-        #     },
-        #     "emergency_response": {
-        #         "summary": "긴급 상황에서도 안정적으로 대처하는 능력이 훌륭합니다.",
-        #         "positive_opinion": "긴급 상황 발생 시 즉각적이고 정확한 대응으로 안전한 운전을 유지했습니다. 이는 신뢰를 높이는 중요한 요소가 되었습니다.",
-        #         "negative_opinion": "그러나 일부 사용자들은 더욱 빠른 대응 속도와 예측 능력이 필요하다는 의견을 내놓았습니다.",
-        #     },
-        #     "parking_function": {
-        #         "summary": "주차 기능은 전반적으로 부드럽고 정확하게 작동했습니다.",
-        #         "positive_opinion": "복잡한 주차 상황에서도 자동 주차 기능이 빛을 발하며 사용자의 스트레스를 줄여주었습니다. 특히, 정밀한 센서와 알고리즘이 잘 조화를 이루었습니다.",
-        #         "negative_opinion": "하지만, 일부 사용자들은 느린 주차 속도에 대한 부정적인 평가를 하였습니다.",
-        #     },
-        #     "overall_satisfaction": {
-        #         "summary": "전체적으로 자율주행 시스템에 대한 만족도는 높았으나, 약간의 개선이 필요합니다.",
-        #         "positive_opinion": "스스로 주행하며 운전자의 부담을 줄이는 점이 매우 만족스러웠습니다. 또한, 안전성과 편의성이 공존하는 시스템이 인상적이었습니다.",
-        #         "negative_opinion": "그러나, 조금 더 빠른 반응 속도와 예상치 못한 상황에 대한 대응 능력의 제고가 필요하다는 의견이 있습니다.",
-        #     },
-        # }
+        #####  OPEN AI를 통해서 comment ################
+        # parsed_json = open_ai_comment(analysis_stats)
 
-        st.subheader("AI 원본 응답")
-        st.json(ai_raw_response)
-
-        # JSON 파싱 시도
-        import json
-
-        try:
-            parsed_json = json.loads(ai_raw_response)
-        except json.JSONDecodeError:
-            st.error("JSON 디코딩 실패! AI 응답이 JSON 형식이 아닙니다.")
-            parsed_json = {}
+        parsed_json = {
+            "driving_comfort": {
+                "summary": "전반적으로 평탄하고 안정감 있는 주행 품질이 만족스럽다는 느낌을 받았습니다.",
+                "positive_opinion": "마치 운전자가 직접 조작하는 것처럼 자연스러운 주행이 인상적이었습니다. 또한, 섬세한 조작으로 승차감이 깔끔하게 전달되는 점이 대단했습니다.",
+                "negative_opinion": "그러나 조금 더 다양한 주행 상황에 대응할 수 있는 섬세한 주행 조작이 필요하다는 의견도 있습니다.",
+            },
+            "emergency_response": {
+                "summary": "긴급 상황에서도 안정적으로 대처하는 능력이 훌륭합니다.",
+                "positive_opinion": "긴급 상황 발생 시 즉각적이고 정확한 대응으로 안전한 운전을 유지했습니다. 이는 신뢰를 높이는 중요한 요소가 되었습니다.",
+                "negative_opinion": "그러나 일부 사용자들은 더욱 빠른 대응 속도와 예측 능력이 필요하다는 의견을 내놓았습니다.",
+            },
+            "parking_function": {
+                "summary": "주차 기능은 전반적으로 부드럽고 정확하게 작동했습니다.",
+                "positive_opinion": "복잡한 주차 상황에서도 자동 주차 기능이 빛을 발하며 사용자의 스트레스를 줄여주었습니다. 특히, 정밀한 센서와 알고리즘이 잘 조화를 이루었습니다.",
+                "negative_opinion": "하지만, 일부 사용자들은 느린 주차 속도에 대한 부정적인 평가를 하였습니다.",
+            },
+            "overall_satisfaction": {
+                "summary": "전체적으로 자율주행 시스템에 대한 만족도는 높았으나, 약간의 개선이 필요합니다.",
+                "positive_opinion": "스스로 주행하며 운전자의 부담을 줄이는 점이 매우 만족스러웠습니다. 또한, 안전성과 편의성이 공존하는 시스템이 인상적이었습니다.",
+                "negative_opinion": "그러나, 조금 더 빠른 반응 속도와 예상치 못한 상황에 대한 대응 능력의 제고가 필요하다는 의견이 있습니다.",
+            },
+        }
 
         if parsed_json:
             st.subheader("AI 코멘트")
