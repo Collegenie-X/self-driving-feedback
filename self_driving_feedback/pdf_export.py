@@ -197,7 +197,7 @@ def make_survey_report_pdf() -> BytesIO:
 
     pdf.set_font("NanumGothic", "", 10)
     pdf.ln(1)
-    pdf.multi_cell(0, 7, txt=survey_summary, border=1)
+    pdf.multi_cell(0, 7, txt=survey_summary)
     pdf.ln(1)
 
     # 응답자 특성 분석
