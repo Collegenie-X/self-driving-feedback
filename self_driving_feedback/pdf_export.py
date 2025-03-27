@@ -11,7 +11,7 @@ from PIL import Image
 import tempfile  # 임시 파일 생성용
 
 # 한글 폰트 설정 (macOS의 경우 AppleGothic, Windows는 Malgun Gothic 등 사용)
-plt.rcParams["font.family"] = "AppleGothic"
+plt.rcParams["font.family"] = "Malgun Gothic"
 plt.rcParams["axes.unicode_minus"] = False
 
 
