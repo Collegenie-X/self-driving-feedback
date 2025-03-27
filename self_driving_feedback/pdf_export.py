@@ -195,7 +195,7 @@ def make_survey_report_pdf() -> BytesIO:
 
     pdf.set_text_color(0, 0, 0)
 
-    pdf.set_font("NanumGothic", "", 10)
+    pdf.set_font("NanumGothic", "", 9)
     pdf.ln(1)
     pdf.multi_cell(0, 7, txt=survey_summary)
     pdf.ln(1)
@@ -217,8 +217,8 @@ def make_survey_report_pdf() -> BytesIO:
     pdf.image(img_region_path, x=x_margin + 90, y=y_position, w=65)
     pdf.ln(45)
 
-    pdf.image(img_gender_path, x=x_margin, y=int(pdf.get_y() + 10), w=60)
-    pdf.ln(65)
+    pdf.image(img_gender_path, x=x_margin, y=int(pdf.get_y() + 6), w=55)
+    pdf.ln(60)
 
     # 만족도 분석
     pdf.set_font("NanumGothic", "B", 12)
