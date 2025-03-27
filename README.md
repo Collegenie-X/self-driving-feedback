@@ -50,7 +50,7 @@ streamlit run app.py
 streamlit run .\streamlit_1_chart.py
 ```
 
- d:/다운로드/self-driving-feedback/venv/Scripts/python.exe -m pip install ipykernel -U --force-reinstall --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
+ pip install ipykernel -U --force-reinstall --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
 
 ## pip install 
 
@@ -72,6 +72,10 @@ pip install -r requirements.txt
  cd self_driving_feedback
  ls  ### (app.py가 있는지 확인) 
  streamlit run app.py
+```
+
+```
+  https://platform.openai.com/docs/overview
 ```
 
 streamlit run pdf_run.py

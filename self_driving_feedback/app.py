@@ -1,6 +1,6 @@
 import streamlit as st
 from survey_part_map_csv import show_survey
-from result_part_real_new import show_result
+from result_part_real_new_ai import show_result
 from pdf_export import make_survey_report_pdf
 
 

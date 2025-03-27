@@ -6,3 +6,6 @@ requests
 streamlit
 fpdf2
 vl-convert-python
+altair
+openai
+python-dotenv
