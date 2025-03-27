@@ -46,7 +46,6 @@ pip install -r requirements.txt
 ```
 cd self_driving_feedback
 streamlit run app.py
-
 ```
 streamlit run .\streamlit_1_chart.py
 ```
