@@ -67,16 +67,16 @@ def make_survey_report_pdf() -> BytesIO:
 
     # (3) 텍스트
     survey_summary = f"""
-[조사 개요]
-- 설문 조사 기간: {survey_start} ~ {survey_end} (12일간)
-- 전체 응답자 수: {total_respondents}명
+            [조사 개요]
+            - 설문 조사 기간: {survey_start} ~ {survey_end} (12일간)
+            - 전체 응답자 수: {total_respondents}명
 
-[주요 만족도 지표]
-- 주행 승차감 평균: {drive_mean}
-- 긴급 상황 대응 평균: {emergency_mean}
-- 주차 기능 평균: {parking_mean}
-- 전반 만족도 평균: {overall_mean}
-"""
+            [주요 만족도 지표]
+            - 주행 승차감 평균: {drive_mean}
+            - 긴급 상황 대응 평균: {emergency_mean}
+            - 주차 기능 평균: {parking_mean}
+            - 전반 만족도 평균: {overall_mean}
+            """
 
     # (4) Altair 차트 3개 -> PNG 임시파일
     bins = [0, 19, 29, 39, 49, 59, 120]
@@ -125,9 +125,7 @@ def make_survey_report_pdf() -> BytesIO:
                 "지역별:N",
                 sort=None,
                 # ⬇︎ x축 라벨 60도 기울이기 + 한글 폰트/크기
-                axis=alt.Axis(
-                    labelAngle=-60, labelFont="NanumGothic", labelFontSize=12
-                ),
+                axis=alt.Axis(labelAngle=60, labelFont="NanumGothic", labelFontSize=12),
             ),
             y=alt.Y(
                 "Count:Q",
@@ -184,9 +182,8 @@ def make_survey_report_pdf() -> BytesIO:
     # 폰트 등록
     pdf.add_font("NanumGothic", "", "NanumGothic.ttf", uni=True)
     pdf.add_font("NanumGothic", "B", "./NanumGothicBold.ttf", uni=True)
-    pdf.set_font("NanumGothic", "", 14)
 
-    # 보고서 제목
+    pdf.set_font("NanumGothic", "B", 14)
     pdf.cell(0, 10, txt="자율주행 설문 결과 보고서", ln=1, align="C")
 
     pdf.set_font("NanumGothic", "", 11)
@@ -201,16 +198,16 @@ def make_survey_report_pdf() -> BytesIO:
     pdf.set_font("NanumGothic", "", 10)
 
     x_margin = pdf.get_x()
-    y_position = pdf.get_y()
+    y_position = pdf.get_y() + 5
 
     # (1) 연령별
-    pdf.image(img_age_path, x=x_margin, y=y_position, w=60, h=60)
+    pdf.image(img_age_path, x=x_margin, y=y_position, w=60)
     # (2) 지역별
-    pdf.image(img_region_path, x=x_margin + 70, y=y_position, w=60, h=60)
+    pdf.image(img_region_path, x=x_margin + 90, y=y_position, w=60)
 
-    pdf.ln(65)
-    pdf.image(img_gender_path, x=x_margin, w=60, h=60)
-    pdf.ln(70)
+    pdf.ln(55)
+    pdf.image(img_gender_path, x=x_margin, w=70)
+    pdf.ln(1)
 
     # 만족도 분석
     pdf.set_font("NanumGothic", "B", 12)
@@ -222,13 +219,14 @@ def make_survey_report_pdf() -> BytesIO:
     y_position2 = pdf.get_y()
 
     pdf.cell(0, 6, txt="주행 승차감 분석(레이더)", ln=1)
-    pdf.image(drive_tmp_name, x=x_margin2, y=y_position2 + 8, w=60, h=60)
+    pdf.image(drive_tmp_name, x=x_margin2, y=y_position2 + 8, w=50)
 
-    pdf.set_y(y_position2 + 8)
-    pdf.set_x(x_margin2 + 70)
+    pdf.set_y(y_position2)
+    pdf.set_x(x_margin2 + 100)
+
+    pdf.set_top_margin(-5)
     pdf.cell(0, 6, txt="전반 만족도 분석(레이더)")
-    pdf.image(overall_tmp_name, x=x_margin2 + 70, y=y_position2 + 14, w=60, h=60)
-    pdf.ln(75)
+    pdf.image(overall_tmp_name, x=x_margin2 + 90, y=y_position2, w=50)
 
     pdf_buffer = BytesIO()
     pdf.output(pdf_buffer, "F")
