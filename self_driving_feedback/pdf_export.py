@@ -11,7 +11,7 @@ from PIL import Image
 import tempfile  # 임시 파일 생성용
 
 # 한글 폰트 설정 (macOS의 경우 AppleGothic, Windows는 Malgun Gothic 등 사용)
-plt.rcParams["font.family"] = "Malgun Gothic"
+plt.rcParams["font.family"] = "AppleGothic"
 plt.rcParams["axes.unicode_minus"] = False
 
 
@@ -89,11 +89,15 @@ def make_survey_report_pdf() -> BytesIO:
         alt.Chart(age_counts)
         .mark_bar(color="steelblue")
         .encode(
-            x=alt.X("연령별:N", sort=None, axis=alt.Axis(labelAngle=0)),
-            y=alt.Y("Count:Q"),
+            x=alt.X(
+                "연령별:N", sort=None, axis=alt.Axis(labelAngle=0, labelFontSize=13)
+            ),
+            y=alt.Y(
+                "Count:Q", axis=alt.Axis(labelFont="NanumGothic", labelFontSize=13)
+            ),
             tooltip=["연령별", "Count"],
         )
-        .properties(width=300, height=200, title="연령별 응답자 분포")
+        .properties(width=300, height=250, title="연령별 응답자 분포")
     )
 
     data["gender_str"] = data["gender"].apply(lambda x: "여성" if x else "남성")
@@ -108,7 +112,7 @@ def make_survey_report_pdf() -> BytesIO:
             color=alt.Color(field="gender", type="nominal"),
             tooltip=["gender", "count"],
         )
-        .properties(width=200, height=200, title="성별 분포 (%)")
+        .properties(width=200, height=250, title="성별 분포 (%)")
         .transform_calculate(
             Percent=f"(round((datum.count / {total_count})*100)) + '%'"
         )
@@ -125,11 +129,11 @@ def make_survey_report_pdf() -> BytesIO:
                 "지역별:N",
                 sort=None,
                 # ⬇︎ x축 라벨 60도 기울이기 + 한글 폰트/크기
-                axis=alt.Axis(labelAngle=60, labelFont="NanumGothic", labelFontSize=12),
+                axis=alt.Axis(labelAngle=45, labelFont="NanumGothic", labelFontSize=13),
             ),
             y=alt.Y(
                 "Count:Q",
-                axis=alt.Axis(labelFont="NanumGothic", labelFontSize=11),
+                axis=alt.Axis(labelFont="NanumGothic", labelFontSize=13),
             ),
             tooltip=["지역별", "Count"],
         )
@@ -183,50 +187,58 @@ def make_survey_report_pdf() -> BytesIO:
     pdf.add_font("NanumGothic", "", "NanumGothic.ttf", uni=True)
     pdf.add_font("NanumGothic", "B", "./NanumGothicBold.ttf", uni=True)
 
-    pdf.set_font("NanumGothic", "B", 14)
-    pdf.cell(0, 10, txt="자율주행 설문 결과 보고서", ln=1, align="C")
+    pdf.set_font("NanumGothic", "B", 13)
+    pdf.set_text_color(255, 255, 255)
+    pdf.cell(
+        0, 10, txt="자율주행 설문 결과 보고서", ln=1, align="C", border=1, fill=True
+    )
 
-    pdf.set_font("NanumGothic", "", 11)
-    pdf.ln(5)
-    pdf.multi_cell(0, 7, txt=survey_summary)
-    pdf.ln(3)
+    pdf.set_text_color(0, 0, 0)
+
+    pdf.set_font("NanumGothic", "", 10)
+    pdf.ln(1)
+    pdf.multi_cell(0, 7, txt=survey_summary, border=1)
+    pdf.ln(1)
 
     # 응답자 특성 분석
     pdf.set_font("NanumGothic", "B", 12)
-    pdf.cell(0, 10, txt="응답자 특성 분석", ln=1)
-    pdf.ln(3)
+    pdf.set_text_color(255, 255, 255)
+    pdf.cell(0, 10, txt="응답자 특성 분석", ln=1, border=1, fill=True)
+    pdf.set_text_color(0, 0, 0)
+    pdf.ln(2)
     pdf.set_font("NanumGothic", "", 10)
 
     x_margin = pdf.get_x()
     y_position = pdf.get_y() + 5
 
     # (1) 연령별
-    pdf.image(img_age_path, x=x_margin, y=y_position, w=60)
+    pdf.image(img_age_path, x=x_margin, y=y_position, w=55)
     # (2) 지역별
-    pdf.image(img_region_path, x=x_margin + 90, y=y_position, w=60)
+    pdf.image(img_region_path, x=x_margin + 90, y=y_position, w=65)
+    pdf.ln(45)
 
-    pdf.ln(55)
-    pdf.image(img_gender_path, x=x_margin, w=70)
-    pdf.ln(1)
+    pdf.image(img_gender_path, x=x_margin, y=int(pdf.get_y() + 10), w=60)
+    pdf.ln(65)
 
     # 만족도 분석
     pdf.set_font("NanumGothic", "B", 12)
-    pdf.cell(0, 10, txt="만족도 분석", ln=1)
+    pdf.set_text_color(255, 255, 255)
+    pdf.cell(0, 10, txt="만족도 분석", ln=1, border=1, fill=True)
+    pdf.set_text_color(0, 0, 0)
     pdf.set_font("NanumGothic", "", 10)
-    pdf.ln(2)
+    pdf.ln(3)
 
     x_margin2 = pdf.get_x()
     y_position2 = pdf.get_y()
 
-    pdf.cell(0, 6, txt="주행 승차감 분석(레이더)", ln=1)
-    pdf.image(drive_tmp_name, x=x_margin2, y=y_position2 + 8, w=50)
+    pdf.cell(0, 6, txt="주행 승차감 분석(레이더)")
+    pdf.image(drive_tmp_name, x=x_margin2, y=y_position2 + 8, w=60)
 
     pdf.set_y(y_position2)
     pdf.set_x(x_margin2 + 100)
 
-    pdf.set_top_margin(-5)
     pdf.cell(0, 6, txt="전반 만족도 분석(레이더)")
-    pdf.image(overall_tmp_name, x=x_margin2 + 90, y=y_position2, w=50)
+    pdf.image(overall_tmp_name, x=x_margin2 + 90, y=y_position2 + 5, w=60)
 
     pdf_buffer = BytesIO()
     pdf.output(pdf_buffer, "F")
