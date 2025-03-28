@@ -15,7 +15,7 @@ from components.ui_components import show_title, show_main_title
 import json
 
 # 한글 폰트 설정 (Windows: Malgun Gothic, macOS: AppleGothic)
-plt.rcParams["font.family"] = "Malgun Gothic"
+plt.rcParams["font.family"] = "AppleGothic"
 plt.rcParams["axes.unicode_minus"] = False
 
 
