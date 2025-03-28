@@ -67,6 +67,7 @@ def show_survey():
     question_groups = [
         {
             "sub_title": "주행 중 느낀점 (승차감 중심)",
+            "image_url": "./images/electric_car.png",
             "question_list": [
                 ("Q1. 큰 도로나 고속도로 주행 시 안정감이 편안했나요?", "q1"),
                 ("Q2. 커브길 주행 시 흔들림 없이 편하게 느끼셨나요?", "q2"),
@@ -76,6 +77,7 @@ def show_survey():
         },
         {
             "sub_title": "돌발 및 긴급 상황 대처 능력 평가",
+            "image_url": "./images/electric_car.png",
             "question_list": [
                 (
                     "Q5. 갑자기 보행자나 자전거가 나타났을 때 빠르게 반응하고 잘 멈추거나 피했나요?",
@@ -94,6 +96,7 @@ def show_survey():
         },
         {
             "sub_title": "자동 주차 기능 평가",
+            "image_url": "./images/electric_car.png",
             "question_list": [
                 ("Q9. 자동 주차할 때 주차 공간을 잘 찾아서 정확히 안내했나요?", "q9"),
                 (
@@ -109,6 +112,7 @@ def show_survey():
         },
         {
             "sub_title": "전반적인 만족도 & 추천 의사",
+            "image_url": "./images/electric_car.png",
             "question_list": [
                 ("Q13. 전체적으로 자율주행 차량의 승차감이 마음에 들었나요?", "q13"),
                 (
@@ -125,7 +129,7 @@ def show_survey():
     responses = {}
     for group in question_groups:
         st.divider()
-        st.subheader(group["sub_title"])
+        show_title(group["image_url"], group["sub_title"])
         st.divider()
 
         # 각 문항에 대해 checkbox_scale_single을 사용하여 응답 받기
