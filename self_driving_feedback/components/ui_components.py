@@ -2,15 +2,16 @@ import streamlit as st
 import base64
 
 
+def get_base64(img_path):
+    with open(img_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+
 def show_title(img_url, title):
     """
     로컬 이미지 파일을 base64로 변환하여
     중앙 정렬 + 특정 스타일로 표시하는 함수
     """
-
-    def get_base64(img_path):
-        with open(img_path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode()
 
     # img_url => 로컬 이미지 경로 (예: "images/autonomous_car.png")
     img_base64 = get_base64(img_url)
