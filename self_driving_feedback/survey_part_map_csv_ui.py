@@ -3,6 +3,8 @@ import pandas as pd
 from my_components import checkbox_scale_single, parse_scale_label
 import os
 
+from components.ui_components import show_title
+
 
 def show_survey():
     st.markdown(
@@ -10,17 +12,8 @@ def show_survey():
         unsafe_allow_html=True,
     )
 
-    st.markdown(
-        """
-        <div class='text' style='color:#ff0' >
-            안녕하세요, Streamlit에서 색상을 변경하는 방법입니다!
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
     # (A) 응답자 정보
-    st.subheader("응답자 정보")
+    show_title("./images/verified.png", "응답자 정보")
     st.divider()
 
     st.write("ID를 입력해 주세요.")

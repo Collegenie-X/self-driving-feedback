@@ -13,7 +13,7 @@ from components.output_parser import parse_output
 import json
 
 # 한글 폰트 설정 (Windows: Malgun Gothic, macOS: AppleGothic)
-plt.rcParams["font.family"] = "AppleGothic"
+plt.rcParams["font.family"] = "Malgun Gothic"
 plt.rcParams["axes.unicode_minus"] = False
 
 
@@ -43,8 +43,8 @@ def radar_chart(
     color="blue",
     alpha=0.3,
     max_radius=None,
-    figsize=(1.2, 1.2),
-    label_fontsize=4,
+    figsize=(3, 3),
+    label_fontsize=8,
 ):
     N = len(categories)
     angles = np.linspace(0, 2 * np.pi, N, endpoint=False)
@@ -198,7 +198,7 @@ def show_result():
             color="blue",
             alpha=0.3,
             max_radius=5,
-            label_fontsize=4,
+            label_fontsize=5,
         )
         st.write("**주행 승차감 분석**")
         st.pyplot(fig1)
@@ -252,13 +252,12 @@ def show_result():
             color="green",
             alpha=0.3,
             max_radius=5,
-            label_fontsize=4,
+            label_fontsize=5,
         )
         st.write("**전반 만족도 분석**")
         st.pyplot(fig2)
 
     st.divider()
-
 
     st.title("자율주행 시스템 설문 분석 - AI 코멘트")
     st.write("CSV 파일에서 설문 데이터를 불러와 통계를 내고, AI 코멘트를 생성합니다.")
