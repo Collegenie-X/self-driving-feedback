@@ -77,7 +77,7 @@ def show_result():
         unsafe_allow_html=True,
     )
 
-    show_main_title("자율 주행 만족 평가 분석 ")
+    show_main_title("자율 주행 만족도 평가 보고서 ")
 
     # 1. 조사 개요
     st.subheader("설문 조사 개요")

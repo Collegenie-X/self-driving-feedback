@@ -19,7 +19,7 @@ def show_survey():
         unsafe_allow_html=True,
     )
 
-    show_main_title("자율 주행 만족 평가 ")
+    show_main_title("자율 주행 만족도도 평가 ")
 
     # (A) 응답자 정보
     show_title("./images/account.png", "응답자 정보")
