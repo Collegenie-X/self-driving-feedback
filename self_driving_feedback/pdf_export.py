@@ -11,7 +11,7 @@ from PIL import Image
 import tempfile  # 임시 파일 생성용
 
 # 한글 폰트 설정 (macOS의 경우 AppleGothic, Windows는 Malgun Gothic 등 사용)
-plt.rcParams["font.family"] = "AppleGothic"
+plt.rcParams["font.family"] = "Malgun Gothic"
 plt.rcParams["axes.unicode_minus"] = False
 
 
@@ -129,7 +129,7 @@ def make_survey_report_pdf() -> BytesIO:
                 "지역별:N",
                 sort=None,
                 # ⬇︎ x축 라벨 60도 기울이기 + 한글 폰트/크기
-                axis=alt.Axis(labelAngle=45, labelFont="NanumGothic", labelFontSize=13),
+                axis=alt.Axis(labelAngle=60, labelFontSize=12),
             ),
             y=alt.Y(
                 "Count:Q",
@@ -215,7 +215,7 @@ def make_survey_report_pdf() -> BytesIO:
     pdf.image(img_age_path, x=x_margin, y=y_position, w=55)
     # (2) 지역별
     pdf.image(img_region_path, x=x_margin + 90, y=y_position, w=65)
-    pdf.ln(45)
+    pdf.ln(50)
 
     pdf.image(img_gender_path, x=x_margin, y=int(pdf.get_y() + 6), w=55)
     pdf.ln(60)
@@ -232,13 +232,13 @@ def make_survey_report_pdf() -> BytesIO:
     y_position2 = pdf.get_y()
 
     pdf.cell(0, 6, txt="주행 승차감 분석(레이더)")
-    pdf.image(drive_tmp_name, x=x_margin2, y=y_position2 + 8, w=60)
+    pdf.image(drive_tmp_name, x=x_margin2, y=y_position2 + 8, h=55)
 
     pdf.set_y(y_position2)
     pdf.set_x(x_margin2 + 100)
 
     pdf.cell(0, 6, txt="전반 만족도 분석(레이더)")
-    pdf.image(overall_tmp_name, x=x_margin2 + 90, y=y_position2 + 5, w=60)
+    pdf.image(overall_tmp_name, x=x_margin2 + 90, y=y_position2 + 8, h=55)
 
     pdf_buffer = BytesIO()
     pdf.output(pdf_buffer, "F")
