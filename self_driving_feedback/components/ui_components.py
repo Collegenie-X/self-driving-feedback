@@ -9,7 +9,7 @@ def get_base64(img_path):
 
 def show_main_title(title):
     st.markdown(
-        f"""<h1 style='text-align: center; text-decoration: underline;'>{title}</h1>""",
+        f"""<h1 style='margin-bottom:60px; text-align: center; text-decoration: underline; '>{title}</h1>""",
         unsafe_allow_html=True,
     )
 

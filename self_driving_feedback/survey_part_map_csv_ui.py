@@ -3,7 +3,7 @@ import pandas as pd
 from my_components import checkbox_scale_single, parse_scale_label
 import os
 
-from components.ui_components import show_title,show_main_title
+from components.ui_components import show_title, show_main_title
 
 
 def show_survey():
@@ -19,39 +19,41 @@ def show_survey():
         unsafe_allow_html=True,
     )
 
-    show_main_title("자율 주행 시스템 만족도 조사") 
+    show_main_title("자율 주행 만족 평가 ")
 
     # (A) 응답자 정보
     show_title("./images/verified.png", "응답자 정보")
-    st.divider()
 
-    st.write("ID를 입력해 주세요.")
-    user_id = st.text_input(
-        label="ID를 입력해 주세요.",
-        key="user_id",
-        placeholder="예: niecut79 (중복 설문을 방지하기 위함입니다.)",
-        label_visibility="collapsed",
-    )
+    _, right = st.columns([0.5, 24])
 
-    # 나이 (숫자 입력) -> 예: 28
-    age = st.number_input(
-        "나이를 입력하세요",
-        min_value=1,
-        max_value=100,
-        value=25,
-        step=1,
-        key="age",
-    )
-    # 성별 -> True/False
-    gender_str = st.radio("성별을 선택하세요.", ["남성", "여성"], key="gender")
-    gender_val = True if gender_str == "남성" else False
+    with right:
+        st.write("ID를 입력해 주세요.")
+        user_id = st.text_input(
+            label="ID를 입력해 주세요.",
+            key="user_id",
+            placeholder="예: niecut79 (중복 설문을 방지하기 위함입니다.)",
+            label_visibility="collapsed",
+        )
 
-    # 거주 지역
-    region = st.selectbox(
-        "거주 지역을 선택하세요.",
-        ["서울", "경기/인천", "충청/대전", "전라/광주", "경상/부산", "강원/제주"],
-        key="region",
-    )
+        # 나이 (숫자 입력) -> 예: 28
+        age = st.number_input(
+            "나이를 입력하세요",
+            min_value=1,
+            max_value=100,
+            value=25,
+            step=1,
+            key="age",
+        )
+        # 성별 -> True/False
+        gender_str = st.radio("성별을 선택하세요.", ["남성", "여성"], key="gender")
+        gender_val = True if gender_str == "남성" else False
+
+        # 거주 지역
+        region = st.selectbox(
+            "거주 지역을 선택하세요.",
+            ["서울", "경기/인천", "충청/대전", "전라/광주", "경상/부산", "강원/제주"],
+            key="region",
+        )
 
     scale_labels = [
         "매우 불만족(1)",
@@ -130,6 +132,7 @@ def show_survey():
         show_title(group["image_url"], group["sub_title"])
 
         # 각 문항에 대해 checkbox_scale_single을 사용하여 응답 받기
+
         responses.update(
             {
                 q[1]: checkbox_scale_single(q[0], scale_labels, q[1])

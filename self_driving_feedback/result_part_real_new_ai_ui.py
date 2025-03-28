@@ -77,7 +77,7 @@ def show_result():
         unsafe_allow_html=True,
     )
 
-    show_main_title("자율 주행 시스템 만족도 분석 결과")
+    show_main_title("자율 주행 만족 평가 분석 ")
 
     # 1. 조사 개요
     st.subheader("설문 조사 개요")
@@ -190,7 +190,7 @@ def show_result():
     categories_overall = ["내구성", "힘", "지능"]
     values_overall = q14_to_q16.values
 
-    row1_col1, row1_col2 = st.columns(2)
+    row1_col1, row1_col2 = st.columns([2, 3])
     with row1_col1:
         fig1, _ = radar_chart(
             values=values_drive,
@@ -224,7 +224,7 @@ def show_result():
             use_container_width=True,
         )
 
-    row2_col1, row2_col2 = st.columns(2)
+    row2_col1, row2_col2 = st.columns([3, 2])
     with row2_col1:
         st.write("**주차 기능 분석**")
         df_parking = pd.DataFrame(
@@ -258,8 +258,9 @@ def show_result():
         st.pyplot(fig2)
 
     st.divider()
+    st.subheader("AI Comment")
+    st.divider()
 
-    st.title("자율주행 시스템 설문 분석 - AI 코멘트")
     st.write("CSV 파일에서 설문 데이터를 불러와 통계를 내고, AI 코멘트를 생성합니다.")
 
     # CSV 로드
@@ -278,7 +279,6 @@ def show_result():
         "overall_satisfaction": round(overall_mean, 2),
     }
 
-    st.subheader("설문 통계")
     st.json(analysis_stats)
 
     # Streamlit 버튼: AI 코멘트 생성
@@ -312,7 +312,7 @@ def show_result():
         }
 
         if parsed_json:
-            st.subheader("AI 코멘트")
+            st.divider()
             # 항목별 출력
             for section, content in parsed_json.items():
                 st.markdown(f"### {section.replace('_',' ').title()}")
@@ -326,3 +326,4 @@ def show_result():
                     )
                 else:
                     st.write("응답:", content)
+                st.divider()
