@@ -10,6 +10,8 @@ from components.prompt_generator import generate_prompt
 from components.ai_comment import call_openai
 from components.output_parser import parse_output
 
+from components.ui_components import show_title, show_main_title
+
 import json
 
 # 한글 폰트 설정 (Windows: Malgun Gothic, macOS: AppleGothic)
@@ -74,10 +76,8 @@ def show_result():
         """,
         unsafe_allow_html=True,
     )
-    st.markdown(
-        "<h2 style='text-align: center;'>자율 주행 시스템 만족도 분석 결과</h2>",
-        unsafe_allow_html=True,
-    )
+
+    show_main_title("자율 주행 시스템 만족도 분석 결과")
 
     # 1. 조사 개요
     st.subheader("설문 조사 개요")

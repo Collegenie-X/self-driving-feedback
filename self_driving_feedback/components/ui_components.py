@@ -7,6 +7,13 @@ def get_base64(img_path):
         return base64.b64encode(img_file.read()).decode()
 
 
+def show_main_title(title):
+    st.markdown(
+        f"""<h1 style='text-align: center; text-decoration: underline;'>{title}</h1>""",
+        unsafe_allow_html=True,
+    )
+
+
 def show_title(img_url, title):
     """
     로컬 이미지 파일을 base64로 변환하여
@@ -30,7 +37,7 @@ def show_title(img_url, title):
             }}
         </style>
 
-        <div align="left" style="margin-top:20px; display:flex; ">
+        <div align="left" style="margin-top:20px; margin-bottom:30px; display:flex; background-color:#f9f9f9; padding:30px 5px;  ">
             <img class="my-img" 
                  src="data:image/png;base64,{img_base64}" 
                  alt="로컬 이미지"

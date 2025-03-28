@@ -3,14 +3,10 @@ import pandas as pd
 from my_components import checkbox_scale_single, parse_scale_label
 import os
 
-from components.ui_components import show_title
+from components.ui_components import show_title,show_main_title
 
 
 def show_survey():
-    st.markdown(
-        "<h2 style='text-align: center;'>자율 주행 시스템 만족도 조사</h2>",
-        unsafe_allow_html=True,
-    )
 
     st.markdown(
         """
@@ -22,6 +18,8 @@ def show_survey():
         """,
         unsafe_allow_html=True,
     )
+
+    show_main_title("자율 주행 시스템 만족도 조사") 
 
     # (A) 응답자 정보
     show_title("./images/verified.png", "응답자 정보")
@@ -130,7 +128,6 @@ def show_survey():
     for group in question_groups:
         st.divider()
         show_title(group["image_url"], group["sub_title"])
-        st.divider()
 
         # 각 문항에 대해 checkbox_scale_single을 사용하여 응답 받기
         responses.update(
