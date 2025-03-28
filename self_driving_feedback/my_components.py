@@ -37,7 +37,7 @@ def checkbox_scale_single(question_text, scale_values, key_prefix):
     #### print("-----------------------------------------------")
 
     # 레이아웃: 왼쪽(질문), 오른쪽(체크박스들)
-    _, col1, col2 = st.columns([0.2, 3, 5])
+    _, col1, col2 = st.columns([0.05, 3, 5])
     col1.write(question_text)
 
     # 체크박스들이 들어갈 열 (5항목 기준)

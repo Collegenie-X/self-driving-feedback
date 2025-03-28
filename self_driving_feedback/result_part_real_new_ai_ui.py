@@ -318,12 +318,18 @@ def show_result():
                 st.markdown(f"### {section.replace('_',' ').title()}")
                 if isinstance(content, dict):
                     st.write("**요약:**", content.get("summary", "정보 없음"))
-                    st.success(
-                        "**긍정 의견:** " + content.get("positive_opinion", "정보 없음")
-                    )
-                    st.error(
-                        "**부정 의견:** " + content.get("negative_opinion", "정보 없음")
-                    )
+                    left, right = st.columns([1, 24])
+                    with left:
+                        st.image("./images/comment.png", width=40)
+                    with right:
+                        st.success(
+                            "**긍정 의견:** "
+                            + content.get("positive_opinion", "정보 없음")
+                        )
+                        st.error(
+                            "**부정 의견:** "
+                            + content.get("negative_opinion", "정보 없음")
+                        )
                 else:
                     st.write("응답:", content)
                 st.divider()

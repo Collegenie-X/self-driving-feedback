@@ -22,9 +22,9 @@ def show_survey():
     show_main_title("자율 주행 만족 평가 ")
 
     # (A) 응답자 정보
-    show_title("./images/verified.png", "응답자 정보")
+    show_title("./images/account.png", "응답자 정보")
 
-    _, right = st.columns([0.5, 24])
+    _, right = st.columns([0.1, 24])
 
     with right:
         st.write("ID를 입력해 주세요.")
