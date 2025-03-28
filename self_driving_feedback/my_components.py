@@ -27,12 +27,33 @@ def checkbox_scale_single(question_text, scale_values, key_prefix):
     if f"{key_prefix}_selected" not in st.session_state:
         st.session_state[f"{key_prefix}_selected"] = None
 
+    #### print("-----------------------------------------------")
+    #### print("key_prefix:", key_prefix)
+    #### print()
+    #### print("question_text:", question_text)
+    #### print()
+    #### # for q in st.session_state:
+    #### #     print(f"{q}: {st.session_state[q]}")
+    #### print("-----------------------------------------------")
+
     # 레이아웃: 왼쪽(질문), 오른쪽(체크박스들)
-    col1, col2 = st.columns([3, 5])
+    _, col1, col2 = st.columns([0.05, 3, 5])
     col1.write(question_text)
 
     # 체크박스들이 들어갈 열 (5항목 기준)
     list_cols = col2.columns([1, 1, 1, 1, 1])
+
+    st.markdown(
+        """
+        <style>
+        /* 모든 체크박스 라벨을 굵게 */
+        div[data-baseweb="checkbox"] > label {
+            font-weight: bold;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
     for idx, val in enumerate(scale_values):
         default_checked = st.session_state[f"{key_prefix}_selected"] == val
@@ -47,20 +68,33 @@ def checkbox_scale_single(question_text, scale_values, key_prefix):
     return st.session_state[f"{key_prefix}_selected"]
 
 
+def print_session_state_table(key_prefix):
+    """
+    key_prefix 관련된 session_state 값을 표 형식으로 출력.
+    """
+    header = f"{'키':<30} | {'값':<10}"
+    separator = "-" * 45
+    print(separator)
+    print(header)
+    print(separator)
+    for key, value in st.session_state.items():
+        if key.startswith(key_prefix):
+            print(f"{key:<30} | {str(value):<10}")
+    print(separator)
+
+
+# 예시로 _on_change_checkbox_single 콜백 내에서 사용
 def _on_change_checkbox_single(val, scale_values, key_prefix):
-    """
-    체크박스가 클릭될 때(ON/OFF) 호출되는 콜백.
-    """
+    print("=== 콜백 호출 전 상태 (표 형식) ===")
+    print_session_state_table(key_prefix)
+
     is_checked = st.session_state[f"{key_prefix}_{val}"]
     if is_checked:
-        # 새로 체크된 항목을 session_state에 저장
         st.session_state[f"{key_prefix}_selected"] = val
-        # 다른 항목은 해제
         for v in scale_values:
             if v != val:
                 st.session_state[f"{key_prefix}_{v}"] = False
     else:
-        # 체크 해제됐을 때
         any_other_checked = False
         for v in scale_values:
             if st.session_state.get(f"{key_prefix}_{v}", False):
@@ -69,3 +103,6 @@ def _on_change_checkbox_single(val, scale_values, key_prefix):
                 break
         if not any_other_checked:
             st.session_state[f"{key_prefix}_selected"] = None
+
+    print("=== 콜백 호출 후 상태 (표 형식) ===")
+    print_session_state_table(key_prefix)
