@@ -17,7 +17,6 @@ def show_survey():
         <style> 
             .st-emotion-cache-wq5ihp.e1icttdg0 {
                 font-size: 18px;
-                padding-left: 20px; 
             }
         </style> 
         """,
