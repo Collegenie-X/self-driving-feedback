@@ -12,6 +12,18 @@ def show_survey():
         unsafe_allow_html=True,
     )
 
+    st.markdown(
+        """
+        <style> 
+            .st-emotion-cache-wq5ihp.e1icttdg0 {
+                font-size: 18px;
+                padding-left: 20px; 
+            }
+        </style> 
+        """,
+        unsafe_allow_html=True,
+    )
+
     # (A) 응답자 정보
     show_title("./images/verified.png", "응답자 정보")
     st.divider()
